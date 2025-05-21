@@ -7,13 +7,11 @@ public class StudentGradeTrackerGUI {
     private JFrame frame;
     private JTextField nameField, gradeField, searchNameField;
     private JTextArea displayArea;
-
-    // Map pour stocker les notes par étudiant
-private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
+    private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
 
     public StudentGradeTrackerGUI() {
         frame = new JFrame("Student Grade Tracker");
-        frame.setSize(450, 500);
+        frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new FlowLayout());
 
@@ -34,7 +32,6 @@ private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
         displayArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
 
-        // Ajout des éléments à la fenêtre
         frame.add(nameLabel);
         frame.add(nameField);
         frame.add(gradeLabel);
@@ -47,7 +44,6 @@ private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
         frame.add(avgOneButton);
         frame.add(scrollPane);
 
-        // Actions
         addButton.addActionListener(e -> addGrade());
         viewButton.addActionListener(e -> displayAllStudents());
         avgAllButton.addActionListener(e -> calculateGlobalAverage());
@@ -60,35 +56,33 @@ private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
         String name = nameField.getText().trim();
         String gradeText = gradeField.getText().trim();
 
-        // Validation du nom
         if (!name.matches("[a-zA-Z ]+")) {
-            JOptionPane.showMessageDialog(frame, "Le nom ne doit contenir que des lettres.");
+            JOptionPane.showMessageDialog(frame, "name entered is not valid.");
             return;
         }
 
         try {
             double grade = Double.parseDouble(gradeText);
             if (grade < 0 || grade > 20) {
-                JOptionPane.showMessageDialog(frame, "La note doit être entre 0 et 20.");
+                JOptionPane.showMessageDialog(frame, "grade should be between 0 and 20.");
                 return;
             }
 
-            // Ajout de la note
             studentMap.putIfAbsent(name, new ArrayList<>());
             studentMap.get(name).add(grade);
 
-            displayArea.append("Ajouté : " + name + " - " + grade + "\n");
+            displayArea.append("student: " + name + " grade: " + grade + "\n");
             nameField.setText("");
             gradeField.setText("");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Note invalide. Veuillez entrer un nombre.");
+            JOptionPane.showMessageDialog(frame, "please enter a valid grade.");
         }
     }
 
     private void displayAllStudents() {
         displayArea.setText("");
         if (studentMap.isEmpty()) {
-            displayArea.setText("Aucun étudiant enregistré.");
+            displayArea.setText("list is empty.");
             return;
         }
 
@@ -109,24 +103,24 @@ private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
         }
 
         if (count == 0) {
-            displayArea.setText("Aucune note enregistrée.");
+            displayArea.setText("empty.");
             return;
         }
 
         double avg = total / count;
-        displayArea.setText("Moyenne globale : " + String.format("%.2f", avg));
+        displayArea.setText("general grade : " + String.format("%.2f", avg));
     }
 
     private void calculateStudentAverage() {
         String name = searchNameField.getText().trim();
         if (!studentMap.containsKey(name)) {
-            displayArea.setText("Aucun étudiant trouvé avec ce nom.");
+            displayArea.setText("can't find student please try again.");
             return;
         }
 
         List<Double> grades = studentMap.get(name);
         if (grades.isEmpty()) {
-            displayArea.setText("Cet étudiant n'a aucune note.");
+            displayArea.setText("this student don't have any grade recorded.");
             return;
         }
 
@@ -134,7 +128,7 @@ private Map<String, java.util.List<Double>> studentMap = new HashMap<>();
         for (double g : grades) total += g;
         double avg = total / grades.size();
 
-        displayArea.setText("Moyenne de " + name + " : " + String.format("%.2f", avg));
+        displayArea.setText("grade of " + name +' '+ String.format("%.2f", avg));
     }
 
     public static void main(String[] args) {
