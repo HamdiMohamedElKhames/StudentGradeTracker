@@ -1,10 +1,10 @@
 Student Grade Tracker
-
-A simple Java Swing application to track student names and grades. Supports:
-- Adding students and grades
-- Viewing the student list
-- Calculating the average grade of all the existing students
-- Calculating the average grade of an existing student by entering the name
-
+A user-friendly Java Swing application for tracking student grades, enhanced with object-oriented programming principles.
+Add students and their grades with validation.
+View all recorded students and their grades.
+Calculate the overall average grade across all students.
+Calculate the average grade of a specific student by name.
+Includes custom exception handling for invalid input.
+Built using inheritance, polymorphism, and clean design principles.
 
 Hamdi Mohamed El Khames :)
